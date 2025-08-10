@@ -13,8 +13,10 @@ const EventList = () => {
   const { data, error } = useData();
   const [type, setType] = useState();
   const [currentPage, setCurrentPage] = useState(1);
+
   const filteredEvents = ((!type ? data?.events : data?.events) || []).filter((event, index) => {
     if ((currentPage - 1) * PER_PAGE <= index && PER_PAGE * currentPage > index) {
+      console.log(event);
       return true;
     }
     return false;
@@ -38,19 +40,24 @@ const EventList = () => {
             onChange={(value) => (value ? changeType(value) : changeType(null))}
           />
           <div id="events" className="ListContainer">
-            {filteredEvents.map((event) => (
-              <Modal key={event.id} Content={<ModalEvent event={event} />}>
-                {({ setIsOpened }) => (
-                  <EventCard
-                    onClick={() => setIsOpened(true)}
-                    imageSrc={event.cover}
-                    title={event.title}
-                    date={new Date(event.date)}
-                    label={event.type}
-                  />
-                )}
-              </Modal>
-            ))}
+            {filteredEvents.map((event) => {
+              console.log("Event debug:", event); // ✅ ici c'est bon
+
+              return (
+                <Modal key={event.id} Content={<ModalEvent event={event} />}>
+                  {({ setIsOpened }) => (
+                    <EventCard
+                      onClick={() => setIsOpened(true)}
+                      imageSrc={event.cover}
+                      title={event.title}
+                      date={new Date(event.date)}
+                      label={event.type}
+                      imageAlt={event.description}
+                    />
+                  )}
+                </Modal>
+              );
+            })}
           </div>
           <div className="Pagination">
             {[...Array(pageNumber || 0)].map((_, n) => (
