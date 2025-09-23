@@ -10,7 +10,7 @@ const Slider = () => {
   const byDateDesc = data?.focus.sort((evtA, evtB) => (new Date(evtA.date) > new Date(evtB.date) ? -1 : 1));
   // une slide de trop ducoup blanche avec -1 je reduis le nombre de slide
   const nextCard = () => {
-    setTimeout(() => setIndex(index < byDateDesc.length - 1 ? index + 1 : 0), 5000000);
+    setTimeout(() => setIndex(index < byDateDesc.length - 1 ? index + 1 : 0), 5000);
     // console.log("nextCard called", index, byDateDesc.length);
   };
 
