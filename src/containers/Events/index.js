@@ -16,7 +16,6 @@ const EventList = () => {
 
   const filteredEvents = ((!type ? data?.events : data?.events) || []).filter((event, index) => {
     if ((currentPage - 1) * PER_PAGE <= index && PER_PAGE * currentPage > index) {
-      console.log(event);
       return true;
     }
     return false;
@@ -41,8 +40,7 @@ const EventList = () => {
           />
           <div id="events" className="ListContainer">
             {filteredEvents.map((event) => {
-              console.log("Event debug:", event); // ✅ ici c'est bon
-
+              
               return (
                 <Modal key={event.id} Content={<ModalEvent event={event} />}>
                   {({ setIsOpened }) => (
