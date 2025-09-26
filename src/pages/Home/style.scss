@@ -66,6 +66,7 @@ main {
     clip-path: ellipse(171% 100% at 58.47% 0%);
   }
 }
+
 .FormContainer {
   display: flex;
   flex-direction: column;
@@ -83,6 +84,7 @@ main {
     margin-top: 32px;
   }
 }
+
 .ListContainer {
   width: 90%;
   max-width: 1200px;
@@ -92,6 +94,7 @@ main {
   margin-top: 64px;
   margin-bottom: 64px;
 }
+
 .Title {
   font-size: 50px;
   font-family: "Space Grotesk", sans-serif;
@@ -99,6 +102,7 @@ main {
   margin: 0;
   margin-top: 64px;
 }
+
 p {
   margin: 0;
 }
@@ -107,6 +111,7 @@ p {
   display: flex;
   justify-content: space-around;
 }
+
 .col {
   display: flex;
   flex-direction: column;

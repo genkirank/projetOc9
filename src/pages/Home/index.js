@@ -14,10 +14,10 @@ import { useData } from "../../contexts/DataContext";
 
 const Page = () => {
   const { data } = useData();
-  const events = data?.events;
-  
+  const events = Array.isArray(data?.events) ? data.events : [];
+  const lastEvent = events.length ? events[events.length - 1] : null;
 
-  console.log("valeur de data:",data)
+  // console.log("valeur de data:", data);
   return (
     <>
       <header>
@@ -100,7 +100,23 @@ const Page = () => {
       <footer className="row">
         <div className="col presta">
           <h3>Notre derniére prestation</h3>
-          <EventCard imageSrc={events?.cover} title={events?.title} date={new Date(events?.date)} small label="boom" />
+          {lastEvent ? (
+            <EventCard
+              imageSrc={lastEvent.cover}
+              title={lastEvent.title}
+              date={new Date(lastEvent.date)}
+              small
+              label={lastEvent.type}
+            />
+          ) : (
+            <EventCard
+              imageSrc="/images/placeholder.jpg"
+              title="Aucun évènement pour le moment"
+              date={new Date()}
+              small
+              label="—"
+            />
+          )}
         </div>
         <div className="col contact">
           <h3>Contactez-nous</h3>
