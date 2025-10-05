@@ -7,11 +7,11 @@ import "./style.scss";
 const Slider = () => {
   const { data } = useData();
   const [index, setIndex] = useState(0);
-  const byDateDesc = data?.focus.sort((evtA, evtB) => (new Date(evtA.date) > new Date(evtB.date) ? -1 : 1));
+  const byDateDesc = data?.focus.sort((B, A) => (new Date(A.date) > new Date(B.date) ? -1 : 1));
   // une slide de trop ducoup blanche avec -1 je reduis le nombre de slide
   const nextCard = () => {
     setTimeout(() => setIndex(index < byDateDesc.length - 1 ? index + 1 : 0), 5000);
-    // console.log("nextCard called", index, byDateDesc.length);
+     console.log("nextCard called", index, byDateDesc);
   };
 
   useEffect(() => {
@@ -35,7 +35,7 @@ const Slider = () => {
           <div className="SlideCard__paginationContainer">
             <div className="SlideCard__pagination">
               {byDateDesc.map((_, radioIdx) => (
-                <input key={`${event.id}`} type="radio" name="radio-button" checked={idx === radioIdx} />
+                <input key={`${event.idx}`} type="radio" name="radio-button" checked={idx === radioIdx} />
               ))}
             </div>
           </div>
