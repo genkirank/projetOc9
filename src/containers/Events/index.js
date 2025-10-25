@@ -33,7 +33,7 @@ const EventList = () => {
         "loading"
       ) : (
         <>
-          <h3 className="select-title">Catégories</h3>
+          <h3 className="selectTitle">Catégories</h3>
           <Select
             selection={Array.from(typeList)}
             onChange={(value) => (value ? changeType(value) : changeType(null))}
