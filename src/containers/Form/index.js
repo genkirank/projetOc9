@@ -9,13 +9,22 @@ const mockContactApi = () => new Promise((resolve) => { setTimeout(resolve, 500)
 const Form = ({ onSuccess, onError }) => {
   const [sending, setSending] = useState(false);
   const sendContact = useCallback(
+  
     async (evt) => {
       evt.preventDefault();
       setSending(true);
+/*
+      const email = evt.target.querySelector('input[label="Email"]')?.value || "";
+      if ((!email.includes("@") || !email.includes("."))) {
+        onError(new Error("Email invalide")); 
+        return;
+      }
+        */
       // We try to call mockContactApi
       try {
         await mockContactApi();
         setSending(false);
+        onSuccess();
       } catch (err) {
         setSending(false);
         onError(err);
