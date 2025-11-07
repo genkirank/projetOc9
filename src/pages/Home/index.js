@@ -1,3 +1,4 @@
+
 import Menu from "../../containers/Menu";
 import ServiceCard from "../../components/ServiceCard";
 import EventCard from "../../components/EventCard";
@@ -14,10 +15,12 @@ import { useData } from "../../contexts/DataContext";
 
 const Page = () => {
   const { data } = useData();
-  const events = Array.isArray(data?.events) ? data.events : [];
-  const lastEvent = events.length ? events[events.length - 1] : null;
 
-  // console.log("valeur de data:", data);
+  const events = Array.isArray(data?.events) ? data.events : [];
+  const sortedEvents = [...events].sort((a, b) => new Date(b.date) - new Date(a.date));
+  const lastEvent = sortedEvents.length ? sortedEvents[0] : null;
+
+
   return (
     <>
       <header>
@@ -152,3 +155,4 @@ const Page = () => {
 };
 
 export default Page;
+

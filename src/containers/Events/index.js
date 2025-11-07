@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import EventCard from "../../components/EventCard";
 import Select from "../../components/Select";
@@ -13,19 +14,24 @@ const EventList = () => {
   const [type, setType] = useState();
   const [currentPage, setCurrentPage] = useState(1);
 
-  const filteredEvents = ((!type ? data?.events :data?.events.filter((event) => event.type === type)) || [])
-    .filter((_, index) => {
-    if ((currentPage - 1) * PER_PAGE <= index && PER_PAGE * currentPage > index) {
-      return true;
-    }
-    return false;
-  });
+  // Sort events by date descending
+  const sortedEvents = [...(data?.events || [])].sort(
+    (a, b) => new Date(b.date) - new Date(a.date)
+  );
+  // Filter events by type if type is selected
+  const totalFiltered = sortedEvents.filter((event) => (type ? event.type === type : true));
+  const pageNumber = Math.ceil(totalFiltered.length / PER_PAGE);
+  const typeList = new Set(data?.events.map((event) => event.type));
+  // Paginate events
+  const filteredEvents = totalFiltered.slice(
+    (currentPage - 1) * PER_PAGE,
+    currentPage * PER_PAGE
+  );
+
   const changeType = (evtType) => {
     setCurrentPage(1);
     setType(evtType);
   };
-  const pageNumber = Math.floor((filteredEvents?.length || 0) / PER_PAGE)+1 ;
-  const typeList = new Set(data?.events.map((event) => event.type));
   return (
     <>
       {error && <div>An error occured</div>}
@@ -39,21 +45,21 @@ const EventList = () => {
             onChange={(value) => (value ? changeType(value) : changeType(null))}
           />
           <div id="events" className="list-container">
-            {filteredEvents.map((event)=> 
-               
-                <Modal key={event.id} Content={<ModalEvent event={event} />}>
-                  {({ setIsOpened }) => (
-                    <EventCard
-                      onClick={() => setIsOpened(true)}
-                      imageSrc={event.cover}
-                      title={event.title}
-                      date={new Date(event.date)}
-                      label={event.type}
-                      imageAlt={event.description}
-                    />
-                  )}
-                </Modal>
-              
+            {filteredEvents.map((event) =>
+
+              <Modal key={event.id} Content={<ModalEvent event={event} />}>
+                {({ setIsOpened }) => (
+                  <EventCard
+                    onClick={() => setIsOpened(true)}
+                    imageSrc={event.cover}
+                    title={event.title}
+                    date={new Date(event.date)}
+                    label={event.type}
+                    imageAlt={event.description}
+                  />
+                )}
+              </Modal>
+
             )}
           </div>
           <div className="pagination">
@@ -71,3 +77,4 @@ const EventList = () => {
 };
 
 export default EventList;
+
